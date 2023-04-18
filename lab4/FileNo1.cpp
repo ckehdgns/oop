@@ -5,11 +5,11 @@ using namespace std;
 
 void sum3sine(short* data, float amp1, float f1, float amp2, float f2, float amp3, float f3) {
     const float pi = 3.141592;
-    float dt = 1./44100.0;
+    float dt = 1. / 44100.0;
     for (int i = 0; i < (5 * 44100); i++)
-        data[i] = (short)(amp1 * sin(2.0 * pi * f1 * i * dt) + amp2 * sin(2.0 * pi * f2 * i * dt) + amp3 * sin(2.0 * pi * f3 * i * dt));   
+        data[i] = (short)(amp1 * sin(2.0 * pi * f1 * i * dt) + amp2 * sin(2.0 * pi * f2 * i * dt) + amp3 * sin(2.0 * pi * f3 * i * dt));
 }
-int main(){
+int main() {
     char header[44];
     ifstream xx("Beatles.wav", ios::binary | ios::in);
     if (!xx) return 666;  // 만일 파일이 열리지 않으면 끝낸다. 
@@ -60,11 +60,11 @@ int main(){
     float amp1 = 10000.0;
     float f1 = 440.0;
 
-    float amp2 = 7500;
-    float f2 = 330.0;
+    float amp2 = 5000;
+    float f2 = 220.0;
 
-    float amp3 = 5000;
-    float f3 = 220.0;
+    float amp3 = 7500;
+    float f3 = 330;
 
     sum3sine(data, amp1, f1, amp2, f2, amp3, f3); //바이너리 파일 작성
     ofstream x2("my.wav", ios::binary | ios::out);
@@ -83,6 +83,13 @@ int main(){
     }
     x2.close();
     x3.close();
+
+    ofstream out12;
+    out12.open("test.txt");
+    for (int i = 0; i < 10; i++) {
+        out12 << i << endl;
+    }
+    out12.close();
 
     return 0;
 }
