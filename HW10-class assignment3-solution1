@@ -1,0 +1,202 @@
+#include <iostream>
+#pragma once
+#include <fstream>
+using namespace std;
+
+class LoL_champion {
+public:
+	LoL_champion() {N1 = 0; N2 = 0; m = 0; a = 0; b = 0; x = 0;dx = 0; }
+	LoL_champion(int n1, int n2, float a1, float b1, float x1, float dx1, int num) {
+		N1 = n1;
+		N2 = n2;
+		m = num;
+		a = a1;
+		b = b1;
+		x = x1;
+		dx = dx1;
+	}
+	int N1, N2, m;
+	float a, b, x, dx;
+	int add1(int* a1) {
+		int sum = 0;
+		int order = 0;
+		
+		for (int i = N1; i < N2 + 1; i++) {
+			sum = 0;
+			for (int j = 0 ; j < i + 1; j++) {
+				sum += j;
+			}
+			a1[order] = sum;
+			order += 1;
+		}
+		return 1;
+	}
+	float add2(float* a2) {
+		for (int i = 0; i < m; i++, x += dx) {
+			a2[i] = (a + x) + b;
+		}
+		return 2;
+	}
+};
+void main() {
+	LoL_champion akali;
+	LoL_champion amumu;
+	LoL_champion annie;
+	LoL_champion ashe;
+
+	akali = LoL_champion(5, 10, 2, 3, -5, 0.1, 10);
+	amumu = LoL_champion(7, 100, -3.5, 4, 100, 10, 15);
+	annie = LoL_champion(12, 17, 0.01, 0.2, 1.5, 0.08, 20);
+	ashe = LoL_champion(10, 20, 4.2, -5.3, 2.1, 0.2, 5);
+
+	int* int_array1 = new int[akali.N2 - akali.N1 + 1];
+	int* int_array2 = new int[amumu.N2 - amumu.N1 + 1];
+	int* int_array3 = new int[annie.N2 - annie.N1 + 1];
+	int* int_array4 = new int[ashe.N2 - ashe.N1 + 1];
+
+	akali.add1(int_array1);
+	amumu.add1(int_array2);
+	annie.add1(int_array3);
+	ashe.add1(int_array4);
+
+	float* float_array1 = new float[akali.m];
+	float* float_array2 = new float[amumu.m];
+	float* float_array3 = new float[annie.m];
+	float* float_array4 = new float[ashe.m];
+
+	akali.add2(float_array1);
+	amumu.add2(float_array2);
+	annie.add2(float_array3);
+	ashe.add2(float_array4);
+
+	ofstream kali_file;
+	kali_file.open("akali.dat", ios::binary | ios::out);
+	kali_file.write((char*)&akali.N1, sizeof(int));
+	kali_file.write((char*)&akali.N2, sizeof(int));
+	kali_file.write((char*)&akali.a, 4);
+	kali_file.write((char*)&akali.b, 4);
+	kali_file.write((char*)&akali.x, 4);
+	kali_file.write((char*)&akali.dx, 4);
+	kali_file.write((char*)int_array1, (akali.N2 - akali.N1 + 1) * 4);
+	kali_file.write((char*)float_array1, (akali.m) * 4);
+	kali_file.write((char*)&akali.m, sizeof(int));
+	kali_file.close();
+
+	ofstream mumu_file;
+	mumu_file.open("amumu.dat", ios::binary | ios::out);
+	mumu_file.write((char*)&amumu.N1, sizeof(int));
+	mumu_file.write((char*)&amumu.N2, sizeof(int));
+	mumu_file.write((char*)&amumu.a, 4);
+	mumu_file.write((char*)&amumu.b, 4);
+	mumu_file.write((char*)&amumu.x, 4);
+	mumu_file.write((char*)&amumu.dx, 4);
+	mumu_file.write((char*)int_array2, (amumu.N2 - amumu.N1 + 1) * 4);
+	mumu_file.write((char*)float_array2, (amumu.m) * 4);
+	mumu_file.write((char*)&amumu.m, sizeof(int));
+	mumu_file.close();
+
+	ofstream nnie_file;
+	nnie_file.open("annie.dat", ios::binary | ios::out);
+	nnie_file.write((char*)&annie.N1, sizeof(int));
+	nnie_file.write((char*)&annie.N2, sizeof(int));
+	nnie_file.write((char*)&annie.a, 4);
+	nnie_file.write((char*)&annie.b, 4);
+	nnie_file.write((char*)&annie.x, 4);
+	nnie_file.write((char*)&annie.dx, 4);
+	nnie_file.write((char*)int_array3, (annie.N2 - annie.N1 + 1) * 4);
+	nnie_file.write((char*)float_array3, (annie.m) * 4);
+	nnie_file.write((char*)&annie.m, sizeof(int));
+	nnie_file.close();
+
+	ofstream she_file;
+	she_file.open("ashe.dat", ios::binary | ios::out);
+	she_file.write((char*)&ashe.N1, sizeof(int));
+	she_file.write((char*)&ashe.N2, sizeof(int));
+	she_file.write((char*)&ashe.a, 4);
+	she_file.write((char*)&ashe.b, 4);
+	she_file.write((char*)&ashe.x, 4);
+	she_file.write((char*)&ashe.dx, 4);
+	she_file.write((char*)int_array4, (ashe.N2 - ashe.N1 + 1) * 4);
+	she_file.write((char*)float_array4, (ashe.m) * 4);
+	she_file.write((char*)&ashe.m, sizeof(int));
+	she_file.close();
+
+	delete[] int_array1;
+	delete[] int_array2;
+	delete[] int_array3;
+	delete[] int_array4;
+	delete[] float_array1;
+	delete[] float_array2;
+	delete[] float_array3;
+	delete[] float_array4;
+
+	float akali_read[23], amumu_read[116], annie_read[33], ashe_read[23];
+	ifstream r1("akali.dat", ios::binary | ios::in);
+	r1.read((char*)akali_read, sizeof(akali_read));
+	r1.close();
+	ifstream r2("amumu.dat", ios::binary | ios::in);
+	r2.read((char*)amumu_read, sizeof(amumu_read));
+	r2.close();
+	ifstream r3("annie.dat", ios::binary | ios::in);
+	r3.read((char*)annie_read, sizeof(annie_read));
+	r3.close();
+	ifstream r4("ashe.dat", ios::binary | ios::in);
+	r4.read((char*)ashe_read, sizeof(ashe_read));
+	r4.close();
+
+	cout << "아칼리" << endl;
+	int* aa1 = (int*)(akali_read);
+	cout << aa1[0] << endl;
+	cout << aa1[1] << endl;
+	for (int i = 2; i < 6; i++) cout << akali_read[i] << endl;
+	for (int i = 6; i < 6 + akali.N2 - akali.N1 + 1; i++) {
+		cout << aa1[i] << endl;
+	}
+	for (int i = 6 + akali.N2 - akali.N1 + 1; i < 6 + akali.N2 - akali.N1 + 1 + akali.m; i++) {
+		cout << akali_read[i] << endl;
+	}
+	cout << aa1[22] << endl;
+	cout << "" << endl;
+
+	cout << "아무무" << endl;
+	int* aa2 = (int*)(amumu_read);
+	cout << aa2[0] << endl;
+	cout << aa2[1] << endl;
+	for (int i = 2; i < 6; i++) cout << amumu_read[i] << endl;
+	for (int i = 6; i < 6 + amumu.N2 - amumu.N1 + 1; i++) {
+		cout << aa2[i] << endl;
+	}
+	for (int i = 6 + amumu.N2 - amumu.N1 + 1; i < 6 + amumu.N2 - amumu.N1 + 1 + amumu.m; i++) {
+		cout << amumu_read[i] << endl;
+	}
+	cout << aa2[115] << endl;
+	cout << "" << endl;
+
+	cout << "애니" << endl;
+	int* aa3 = (int*)(amumu_read);
+	cout << aa3[0] << endl;
+	cout << aa3[1] << endl;
+	for (int i = 2; i < 6; i++) cout << annie_read[i] << endl;
+	for (int i = 6; i < 6 + annie.N2 - annie.N1 + 1; i++) {
+		cout << aa3[i] << endl;
+	}
+	for (int i = 6 + annie.N2 - annie.N1 + 1; i < 6 + annie.N2 - annie.N1 + 1 + annie.m; i++) {
+		cout << annie_read[i] << endl;
+	}
+	cout << aa3[32] << endl;
+	cout << "" << endl;
+
+	cout << "애쉬" << endl;
+	int* aa4 = (int*)(ashe_read);
+	cout << aa4[0] << endl;
+	cout << aa4[1] << endl;
+	for (int i = 2; i < 6; i++) cout << ashe_read[i] << endl;
+	for (int i = 6; i < 6 + ashe.N2 - ashe.N1 + 1; i++) {
+		cout << aa4[i] << endl;
+	}
+	for (int i = 6 + ashe.N2 - ashe.N1 + 1; i < 6 + ashe.N2 - ashe.N1 + 1 + ashe.m; i++) {
+		cout << ashe_read[i] << endl;
+	}
+	cout << aa4[22] << endl;
+	cout << "" << endl;
+}
